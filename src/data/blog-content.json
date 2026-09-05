@@ -1109,7 +1109,8 @@
     {
       "type": "section",
       "html": "The Aura Effect:",
-      "video": "/images/aura-of-care_website-video.mp4",
+      "image": "/images/aura-dental-brand-story.png",
+      "alt": "The Aura of care — Aura Dental brand story",
       "imageWidth": "30%",
       "side": "right",
       "body": [

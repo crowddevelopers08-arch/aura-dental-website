@@ -70,21 +70,15 @@ export default function WhyAuraDental() {
             </div>
           ))}
 
-          {/* Brand film. 1852x1500 native, so it keeps its own aspect in the column. */}
+          {/* Brand still. 1200x630 native, so it keeps its own aspect in the column. */}
           <div className="order-first md:order-none md:col-start-2 md:row-start-1 md:row-span-2 md:self-center">
-            <video
+            <Image
+              src="/images/aura-dental-brand-story.png"
+              alt="The Aura of care — Aura Dental brand story"
+              width={1200}
+              height={630}
               className="h-auto w-full"
-              width={1852}
-              height={1500}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-            >
-              <source src="/images/aura-of-care_website-video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            />
           </div>
         </div>
       </div>

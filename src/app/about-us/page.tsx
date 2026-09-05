@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/sections/PageHero";
 import AboutTreatments from "@/components/about/AboutTreatments";
 import AwardsGallery from "@/components/about/AwardsGallery";
@@ -18,7 +19,7 @@ function AboutBand({
   copy,
   copyExtra,
   cta = false,
-  media = "video",
+  media = "image",
   tone = "light",
 }: {
   eyebrow: string;
@@ -26,8 +27,8 @@ function AboutBand({
   copy: string;
   copyExtra?: string;
   cta?: boolean;
-  /** "card" swaps the clinic film for the gold-glow statement card. */
-  media?: "video" | "card";
+  /** "card" swaps the clinic still for the gold-glow statement card. */
+  media?: "image" | "card";
   /** "dark" puts the band on the deep-green ground with reversed-out type. */
   tone?: "light" | "dark";
 }) {
@@ -90,16 +91,13 @@ function AboutBand({
           </div>
         ) : (
           <div className="order-2 overflow-hidden rounded-[20px]">
-            <video
+            <Image
+              src="/images/about-us.jpg"
+              alt="Inside the Aura Dental clinic in Madinaguda, Hyderabad"
+              width={1201}
+              height={631}
               className="h-auto w-full"
-              controls
-              playsInline
-              preload="metadata"
-              poster="/images/about-us.jpg"
-            >
-              <source src="/images/3d-mockup.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            />
           </div>
         )}
       </div>

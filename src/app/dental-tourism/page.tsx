@@ -105,18 +105,15 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Same clinic walkthrough the About Us page uses */}
+          {/* Same clinic still the About Us page uses */}
           <div className="order-2 overflow-hidden rounded-[20px]">
-            <video
+            <Image
+              src="/images/about-us.jpg"
+              alt="Inside the Aura Dental clinic in Madinaguda, Hyderabad"
+              width={1201}
+              height={631}
               className="h-auto w-full"
-              controls
-              playsInline
-              preload="metadata"
-              poster="/images/about-us.jpg"
-            >
-              <source src="/images/3d-mockup.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            />
           </div>
         </div>
       </section>
