@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/*
+  Aura Dental — design tokens taken verbatim from the live site's theme CSS.
+
+  Colour
+    Primary (deep green) .... #1d4231
+    Accent  (gold) .......... #d3b871 / #d2b770
+    Neutral band ............ #ececec
+    Hero gradient ........... #ddd5ca -> #ffffff
+
+  Type (template_main.min.css + template_child.min.css)
+    Body ......... Open Sans 18px / 1.4, #000
+    Headings ..... EB Garamond
+      h1 40px/700 (32px below 768px)   h4 24px/600
+      h2 32px/700                      h5 14px/600
+      h3 26px/700                      h6 12px/500
+*/
+
+@theme {
+  --font-sans: var(--font-open-sans), sans-serif;
+  --font-heading: var(--font-eb-garamond), sans-serif;
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-offer-pulse: offer-pulse 2.2s ease-in-out infinite;
+}
+
+/* The floating launch-offer pill breathes so it reads as live without moving
+   out of its corner. */
+@keyframes offer-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+/* Continuous marquee: the track holds the list twice, so shifting it by half
+   its width lands on an identical frame and the loop is seamless. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Anyone who asked for less motion gets a static, hand-scrollable track. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-offer-pulse {
+    animation: none;
+  }
+  .marquee-viewport {
+    overflow-x: auto;
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+/* These element defaults must live in `@layer base`. Tailwind v4 emits every
+   utility inside `@layer utilities`, and unlayered CSS wins over *any* layered
+   rule regardless of specificity — so unlayered `h1 { margin: 0 }` / `p { margin }`
+   would beat `mx-auto`, `mb-*`, `text-*` and `font-*` on every heading and
+   paragraph in the app. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* The source sets `html { font-size: 18px }`; we set it on `body` instead so the
+     root rem stays 16px and Tailwind's rem-based spacing scale is unaffected. The
+     rendered body text size is identical. */
+  body {
+    font-family: var(--font-open-sans), "Open Sans", sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #000;
+    word-break: break-word;
+    background: #ffffff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-eb-garamond), "EB Garamond", sans-serif;
+    color: #000;
+    font-style: normal;
+    text-decoration: none;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 26px;
+    font-weight: 700;
+  }
+  h4 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  h5 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  h6 {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* child theme: h1 steps down on mobile */
+  @media (max-width: 767.98px) {
+    h1 {
+      font-size: 32px;
+    }
+  }
+
+  p {
+    margin: 0 0 15px;
+  }
+
+  /* Tailwind v4's Preflight leaves buttons on `cursor: default` (it follows the
+     browser default, unlike v3). Every control on the site is a real <button> —
+     carousel arrows and dots, accordion rows, lightbox thumbnails, the chat
+     chips, form submits — so restore the pointer once, here, rather than
+     sprinkling `cursor-pointer` across 34 elements. Being in `base` means an
+     explicit `cursor-*` utility still wins wherever one is set. */
+  button,
+  summary,
+  select,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Clear the pinned announcement bar + header when jumping to an in-page anchor */
+  [id] {
+    scroll-margin-top: 140px;
+  }
+}
+
+/* Hide scrollbars on the horizontal carousels (visual parity with the source) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
