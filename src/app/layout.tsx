@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Open_Sans } from "next/font/google";
 import "./globals.css";
-import AnnouncementBar from "@/components/layout/AnnouncementBar";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import ChatWidget from "@/components/layout/ChatWidget";
 
 /*
  * The source site self-hosts exactly these two families through HubSpot's
@@ -53,17 +49,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${openSans.variable} ${ebGaramond.variable}`}>
-      <body className="bg-white antialiased">
-        {/* Bar + header pin together as one unit, so the offer strip stays visible
-            on scroll and the header never overlaps it. */}
-        <div className="sticky top-0 z-50">
-          <AnnouncementBar />
-          <Header />
-        </div>
-        <main>{children}</main>
-        <Footer />
-        <ChatWidget />
-      </body>
+      {/* Chrome lives in `(site)/layout.tsx`; this layout only carries the
+          document shell, fonts and site-wide metadata. */}
+      <body className="bg-white antialiased">{children}</body>
     </html>
   );
 }

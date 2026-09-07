@@ -1,0 +1,68 @@
+// Aura Dental — lead capture.
+//
+// Both front-end lead sources land in one table: the enquiry forms
+// (`EnquiryForm`, on the homepage, /contact and every service page) and the
+// scripted chat widget. They ask overlapping-but-different questions, so the
+// columns either side only fills are nullable.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Prisma 7 keeps connection URLs out of the schema: migrations read them from
+// `prisma.config.ts`, and the client gets them via the Neon driver adapter in
+// `src/lib/prisma.ts`.
+datasource db {
+  provider = "postgresql"
+}
+
+/// Which surface the visitor filled in.
+enum LeadSource {
+  ENQUIRY_FORM
+  CHAT_WIDGET
+}
+
+/// Where the clinic has got to with the lead. Drives the dashboard badges.
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CLOSED
+}
+
+model Lead {
+  id String @id @default(cuid())
+
+  name  String
+  email String
+  phone String
+
+  /// "+91". Only the enquiry form collects a country; the chat widget does not.
+  dialCode String? @map("dial_code")
+  /// ISO-2, e.g. "IN".
+  country  String?
+  /// Preferred clinic. Only the chat widget asks this.
+  location String?
+  /// One of TREATMENT_OPTIONS / SERVICE_LINKS, free text if the list changes.
+  treatment String?
+
+  source LeadSource @default(ENQUIRY_FORM)
+  status LeadStatus @default(NEW)
+
+  /// The page the lead was submitted from, e.g. "/dental-implants".
+  pagePath String? @map("page_path")
+  /// Free-text scratch space for whoever works the lead.
+  notes    String?
+
+  /// False when the Google Sheets mirror was unreachable, so a failed
+  /// hand-off is visible in the dashboard instead of silently lost.
+  syncedToSheet Boolean @default(false) @map("synced_to_sheet")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([createdAt])
+  @@index([status])
+  @@index([source])
+  @@map("leads")
+}

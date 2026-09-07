@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { COUNTRIES, DEFAULT_COUNTRY_ISO, countryLabel } from "@/data/countries";
 import { TREATMENT_OPTIONS } from "@/data/site";
 
@@ -31,8 +32,13 @@ function Caret({ className = "" }: { className?: string }) {
  */
 export default function EnquiryForm({ layout = "strip" }: Props) {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [iso, setIso] = useState(DEFAULT_COUNTRY_ISO);
   const [treatment, setTreatment] = useState("");
+
+  // Recorded with the lead so the clinic can see which page drove the enquiry.
+  const pathname = usePathname();
 
   // Keyed on ISO, not dial code — US and CA both dial +1.
   const dial = COUNTRIES.find((c) => c.iso === iso)?.dial ?? "+91";
@@ -49,11 +55,56 @@ export default function EnquiryForm({ layout = "strip" }: Props) {
   const INPUT =
     "h-full w-full min-w-0 bg-transparent text-[15px] outline-none placeholder:text-[#9a9a9a]";
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // The source site posts to HubSpot. Wire this up to your own endpoint/CRM.
-    setSent(true);
+    if (sending) return;
+
+    // Read before the first await — React pools the event, and `currentTarget`
+    // is null by the time the fetch resolves.
+    const data = new FormData(e.currentTarget);
+
+    setSending(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+          dialCode: data.get("dial_code"),
+          country: data.get("country"),
+          treatment: data.get("treatment"),
+          source: "ENQUIRY_FORM",
+          pagePath: pathname,
+        }),
+      });
+
+      const body = (await res.json().catch(() => null)) as
+        | { errors?: string[] }
+        | null;
+
+      if (!res.ok) {
+        setError(body?.errors?.[0] ?? "Something went wrong. Please try again.");
+        return;
+      }
+
+      setSent(true);
+    } catch {
+      setError("We couldn't reach the server. Please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   }
+
+  /** Shown above the button in both layouts. */
+  const errorNote = error ? (
+    <p role="alert" className="text-[14px] font-medium text-[#d03b3b]">
+      {error}
+    </p>
+  ) : null;
 
   if (sent) {
     return (
@@ -176,12 +227,14 @@ export default function EnquiryForm({ layout = "strip" }: Props) {
           {services}
         </div>
 
-        <div className="pt-2 text-center">
+        <div className="space-y-3 pt-2 text-center">
+          {errorNote}
           <button
             type="submit"
-            className="rounded-full bg-[#1d4231] px-8 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-[#163527]"
+            disabled={sending}
+            className="rounded-full bg-[#1d4231] px-8 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-[#163527] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Submit
+            {sending ? "Submitting…" : "Submit"}
           </button>
         </div>
       </form>
@@ -189,21 +242,26 @@ export default function EnquiryForm({ layout = "strip" }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto flex max-w-[1180px] flex-col gap-3 lg:flex-row lg:items-center lg:gap-5"
-    >
-      <div className="lg:flex-1">{name}</div>
-      <div className="lg:flex-1">{email}</div>
-      <div className="lg:flex-1">{phone}</div>
-      <div className="lg:flex-1">{services}</div>
-
-      <button
-        type="submit"
-        className="h-[46px] shrink-0 rounded-full bg-[#d3b871] px-8 text-[16px] font-semibold text-[#1d4231] transition-colors hover:bg-[#c9a95d] lg:w-auto"
+    <div className="mx-auto max-w-[1180px]">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-5"
       >
-        Submit
-      </button>
-    </form>
+        <div className="lg:flex-1">{name}</div>
+        <div className="lg:flex-1">{email}</div>
+        <div className="lg:flex-1">{phone}</div>
+        <div className="lg:flex-1">{services}</div>
+
+        <button
+          type="submit"
+          disabled={sending}
+          className="h-[46px] shrink-0 rounded-full bg-[#d3b871] px-8 text-[16px] font-semibold text-[#1d4231] transition-colors hover:bg-[#c9a95d] disabled:cursor-not-allowed disabled:opacity-60 lg:w-auto"
+        >
+          {sending ? "Submitting…" : "Submit"}
+        </button>
+      </form>
+
+      {errorNote && <div className="mt-3 text-center lg:text-left">{errorNote}</div>}
+    </div>
   );
 }
