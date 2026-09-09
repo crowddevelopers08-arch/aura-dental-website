@@ -114,13 +114,21 @@ export default function Footer() {
       {/* Gold bottom bar */}
       <div className="bg-[#d2b770]">
         <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-3 px-5 py-4 text-center text-[#1d4231] md:flex-row md:justify-between md:text-left">
-          <div className="text-[15px]">
+          {/* `flex-wrap`: three links plus the separators outrun a narrow bar */}
+          <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-[15px] md:justify-start">
             <Link href="/privacy-policy" className="text-[#1d4231] hover:underline">
               Privacy Policy
             </Link>
-            {" | "}
+            <span aria-hidden="true">|</span>
             <Link href="/terms-and-conditions" className="text-[#1d4231] hover:underline">
               Terms &amp; Conditions
+            </Link>
+            <span aria-hidden="true">|</span>
+            <Link
+              href="/cancellation-and-refund-policy"
+              className="text-[#1d4231] hover:underline"
+            >
+              Cancellation &amp; Refunds
             </Link>
           </div>
           <SocialIcons />

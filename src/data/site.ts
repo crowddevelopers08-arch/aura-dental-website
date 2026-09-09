@@ -73,6 +73,7 @@ export const QUICK_LINKS = [
   { label: "Blogs", href: "/blogs" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms & Conditions", href: "/terms-and-conditions" },
+  { label: "Cancellation & Refund Policy", href: "/cancellation-and-refund-policy" },
 ];
 
 export const OPENING_HOURS = [
