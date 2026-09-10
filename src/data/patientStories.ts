@@ -10,14 +10,14 @@ export const PATIENT_STORIES: PatientStory[] = [
   {
     title: "Partial Denture",
     description: "Tooth preparation, cord packing and master impressions",
-    before: "/images/images-01.jpg",
+    before: "/images/partial.jpg",
     after: "/images/aligners-nov-25-2025-12-57-29-4908-pm.jpg",
     href: "/patient-stories/partial-denture-case",
   },
   {
     title: "Fixed Partial Denture",
     description: "Toothpreparation, cord packing followed by master impression",
-    before: "/images/images-02.jpg",
+    before: "/images/fixed-partial-dentures-fixed.jpg",
     after: "/images/laser-dentistry.jpg",
     href: "/patient-stories/fixed-partial-denture",
   },
@@ -45,7 +45,7 @@ export const PATIENT_STORIES: PatientStory[] = [
   {
     title: "Advanced Dentistry",
     description: "She had a childhood fear of dental treatments and tools.",
-    before: "/images/images-06.jpg",
+    before: "/images/microscopic-precision.jpg",
     after: "/images/root-canal-treatment.jpg",
     href: "/patient-stories/the-problem-which-priya-was-facing-advanced-dentistry",
   },
