@@ -10,7 +10,7 @@ import CommitmentBand from "@/components/sections/CommitmentBand";
 import type { FaqItem } from "@/data/services";
 
 export const metadata: Metadata = {
-  title: "Dental Tourism in Hyderabad for NRIs & International Patients | Aura Dental",
+  title: "Medical Tourism in Hyderabad for NRIs & International Patients | Aura Dental",
   description:
     "World-class dental care made easy for NRIs, expats and international visitors to Hyderabad. Online consultations before you fly, treatment planned around your travel dates.",
 };
@@ -69,7 +69,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="Dental Tourism at Aura Dental"
+        title="Medical Tourism at Aura Dental"
         intro="World-class dental care made easy, comfortable, and beautifully planned for every NRI, expat, and international visitor coming to Hyderabad."
         ctaLabel="Book Your Free Consultation"
         ctaHref="/contact"
@@ -125,13 +125,13 @@ export default function Page() {
         <div className="mx-auto max-w-[1240px]">
           {/* align-desktop-center on the source, unlike the other section headings */}
           <h2 className="text-center text-[32px] font-bold leading-[1.3] text-black">
-            What Makes Aura&rsquo;s Dental Tourism Program Different?
+            What Makes Aura&rsquo;s Medical Tourism Program Different?
           </h2>
 
           <div className="mt-6 md:mt-10 grid grid-cols-1 items-center gap-6 md:gap-10 lg:grid-cols-2">
             <Image
-              src="/images/dental-tourism.jpg"
-              alt="Dental-Tourism"
+              src="/images/medical-tourism.jpg"
+              alt="Medical tourism at Aura Dental"
               width={620}
               height={460}
               className="h-auto w-full rounded-[20px] object-cover"

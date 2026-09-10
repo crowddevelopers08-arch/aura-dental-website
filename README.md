@@ -63,7 +63,7 @@ is identical either way.
 /root-canal-treatment                 /patient-stories/[slug]    × 6
 /dental-implants                      /patient-testimonials
 /kids-pediatric-dentistry             /privacy-policy
-/dental-tourism                       /terms-and-conditions
+/medical-tourism                      /terms-and-conditions
 ```
 
 ## Structure

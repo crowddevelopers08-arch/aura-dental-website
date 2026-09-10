@@ -70,15 +70,19 @@ export default function WhyAuraDental() {
             </div>
           ))}
 
-          {/* Brand still. 1201x631 native, so it keeps its own aspect in the column. */}
+          {/* Clinic still. The source is a 4672x7008 portrait, far taller than the
+              column needs, so it is cropped to 4:5 around the centre of the frame.
+              Capped on mobile, where the column is the full page width. */}
           <div className="order-first md:order-none md:col-start-2 md:row-start-1 md:row-span-2 md:self-center">
-            <Image
-              src="/images/home.jpg"
-              alt="Dentist treating a relaxed patient at Aura Dental"
-              width={1201}
-              height={631}
-              className="h-auto w-full rounded-2xl"
-            />
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-[380px] overflow-hidden rounded-2xl md:max-w-none">
+              <Image
+                src="/images/DSC08450.jpg"
+                alt="Dr. Siva Nagini treating a patient at Aura Dental"
+                fill
+                sizes="(min-width: 768px) 33vw, 380px"
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>

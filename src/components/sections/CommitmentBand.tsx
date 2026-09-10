@@ -1,6 +1,6 @@
 import Button from "@/components/ui/Button";
 
-/** "Our Commitment" closing band used on /about-us and /dental-tourism. */
+/** "Our Commitment" closing band used on /about-us and /medical-tourism. */
 export default function CommitmentBand() {
   return (
     <section className="bg-[#d2b770] px-5 py-7 md:py-12">

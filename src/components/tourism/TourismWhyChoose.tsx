@@ -29,7 +29,7 @@ export default function TourismWhyChoose() {
           Why Patients Around the World Choose Aura Dental
         </h2>
         <p className="mt-4 max-w-[900px] text-[18px] leading-[1.4] text-[#444]">
-          Dental tourism at Aura is centered around comfort, clarity, and care. Whether you&rsquo;re
+          Medical tourism at Aura is centered around comfort, clarity, and care. Whether you&rsquo;re
           visiting India for a short trip or planning a full smile upgrade, we make every step
           simple and stress-free.
         </p>

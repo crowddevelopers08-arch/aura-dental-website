@@ -31,7 +31,7 @@ export const SERVICE_LINKS = [
   { label: "Root Canal Treatment", href: "/root-canal-treatment" },
   { label: "Dental Implants", href: "/dental-implants" },
   { label: "Kids Dentistry/Pediatric Dentistry", href: "/kids-pediatric-dentistry" },
-  { label: "Dental Tourism", href: "/dental-tourism" },
+  { label: "Medical Tourism", href: "/medical-tourism" },
 ];
 
 /**
