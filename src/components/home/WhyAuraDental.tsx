@@ -70,14 +70,14 @@ export default function WhyAuraDental() {
             </div>
           ))}
 
-          {/* Brand still. 1200x630 native, so it keeps its own aspect in the column. */}
+          {/* Brand still. 1201x631 native, so it keeps its own aspect in the column. */}
           <div className="order-first md:order-none md:col-start-2 md:row-start-1 md:row-span-2 md:self-center">
             <Image
-              src="/images/aura-dental-brand-story.png"
-              alt="The Aura of care — Aura Dental brand story"
-              width={1200}
-              height={630}
-              className="h-auto w-full"
+              src="/images/home.jpg"
+              alt="Dentist treating a relaxed patient at Aura Dental"
+              width={1201}
+              height={631}
+              className="h-auto w-full rounded-2xl"
             />
           </div>
         </div>
