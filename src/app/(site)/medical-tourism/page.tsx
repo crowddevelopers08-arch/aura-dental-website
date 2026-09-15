@@ -105,13 +105,12 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Same clinic still the About Us page uses */}
           <div className="order-2 overflow-hidden rounded-[20px]">
             <Image
-              src="/images/about-us.jpg"
-              alt="Inside the Aura Dental clinic in Madinaguda, Hyderabad"
-              width={1201}
-              height={631}
+              src="/images/clinic-treatment-1.jpg"
+              alt="Treatment suite inside the Aura Dental clinic in Madinaguda, Hyderabad"
+              width={1536}
+              height={1024}
               className="h-auto w-full"
             />
           </div>

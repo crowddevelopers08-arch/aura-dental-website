@@ -3,6 +3,7 @@ import Image from "next/image";
 import PageHero from "@/components/sections/PageHero";
 import AboutTreatments from "@/components/about/AboutTreatments";
 import AwardsGallery from "@/components/about/AwardsGallery";
+import ClinicGallery from "@/components/sections/ClinicGallery";
 import CommitmentBand from "@/components/sections/CommitmentBand";
 import Button from "@/components/ui/Button";
 
@@ -92,10 +93,10 @@ function AboutBand({
         ) : (
           <div className="order-2 overflow-hidden rounded-[20px]">
             <Image
-              src="/images/about-us.jpg"
-              alt="Inside the Aura Dental clinic in Madinaguda, Hyderabad"
-              width={1201}
-              height={631}
+              src="/images/clinic-reception-1.jpg"
+              alt="Reception and waiting area inside the Aura Dental clinic in Madinaguda, Hyderabad"
+              width={1536}
+              height={1024}
               className="h-auto w-full"
             />
           </div>
@@ -130,6 +131,8 @@ export default function Page() {
         cta
         tone="dark"
       />
+
+      <ClinicGallery heading="Our Clinic" />
 
       <AboutTreatments />
       <AwardsGallery />

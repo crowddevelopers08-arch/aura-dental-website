@@ -7,6 +7,7 @@ import BestSmileCta from "@/components/home/BestSmileCta";
 import VideoTestimonials from "@/components/sections/VideoTestimonials";
 import HomeFaq from "@/components/home/HomeFaq";
 import LaunchOfferCta from "@/components/home/LaunchOfferCta";
+import ClinicGallery from "@/components/sections/ClinicGallery";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <WhyAuraDental />
       <TreatmentsOffered />
       <AboutPreview />
+      <ClinicGallery />
       <BestSmileCta />
       <VideoTestimonials />
       <HomeFaq />
