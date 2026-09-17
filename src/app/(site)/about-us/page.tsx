@@ -4,6 +4,7 @@ import PageHero from "@/components/sections/PageHero";
 import AboutTreatments from "@/components/about/AboutTreatments";
 import AwardsGallery from "@/components/about/AwardsGallery";
 import ClinicGallery from "@/components/sections/ClinicGallery";
+import { TEAM_PHOTOS } from "@/data/galleryPhotos";
 import CommitmentBand from "@/components/sections/CommitmentBand";
 import Button from "@/components/ui/Button";
 
@@ -133,6 +134,7 @@ export default function Page() {
       />
 
       <ClinicGallery heading="Our Clinic" />
+      <ClinicGallery heading="Meet Our Team" photos={TEAM_PHOTOS} tone="dark" captions={false} />
 
       <AboutTreatments />
       <AwardsGallery />

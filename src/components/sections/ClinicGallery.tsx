@@ -3,36 +3,34 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
-/** Grouped by area so each desktop row of three reads as one space. */
-const PHOTOS = [
-  { src: "/images/clinic-reception-1.jpg", label: "Reception & Waiting Area" },
-  { src: "/images/clinic-reception-2.png", label: "Reception" },
-  { src: "/images/clinic-reception-3.jpg", label: "Front Desk" },
-  { src: "/images/clinic-lounge-1.png", label: "Invisalign Provider Lounge" },
-  { src: "/images/clinic-lounge-2.jpg", label: "Invisalign Lounge" },
-  { src: "/images/clinic-lounge-3.jpg", label: "Patient Lounge" },
-  { src: "/images/clinic-treatment-1.jpg", label: "Treatment Suite" },
-  { src: "/images/clinic-treatment-2.jpg", label: "Ergonomic Dental Unit" },
-  { src: "/images/clinic-treatment-3.png", label: "Treatment Room" },
-];
+import { CLINIC_PHOTOS, type GalleryPhoto } from "@/data/galleryPhotos";
 
-/** Lightbox gallery of the clinic interiors. */
+/** Lightbox photo gallery; shows the clinic interiors unless given `photos`. */
 export default function ClinicGallery({
   heading = "Take a Look Inside Aura Dental",
   tone = "light",
+  photos = CLINIC_PHOTOS,
+  captions = true,
 }: {
   heading?: string;
   /** "dark" puts the section on the deep-green ground with reversed-out type. */
   tone?: "light" | "dark";
+  photos?: GalleryPhoto[];
+  /** false hides the label overlaid on each thumbnail. */
+  captions?: boolean;
 }) {
+  const PHOTOS = photos;
   const [index, setIndex] = useState<number | null>(null);
   const dark = tone === "dark";
+  // Five photos in rows of three would leave a short last row, so on desktop
+  // the first two share the top row and the rest fill rows of three below.
+  const wide = PHOTOS.length % 3 === 2;
 
   const close = useCallback(() => setIndex(null), []);
   const step = useCallback(
     (dir: 1 | -1) =>
       setIndex((i) => (i === null ? i : (i + dir + PHOTOS.length) % PHOTOS.length)),
-    []
+    [PHOTOS.length]
   );
 
   useEffect(() => {
@@ -59,28 +57,36 @@ export default function ClinicGallery({
           {heading}
         </h2>
 
-        {/* Nine photos: on the two-column phone grid the first spans both
-            columns so the remaining eight pair up evenly. */}
-        <div className="mt-6 grid grid-cols-2 gap-3 md:mt-10 md:grid-cols-3 md:gap-5">
+        {/* Odd counts: on the two-column phone grid the first photo spans both
+            columns so the rest pair up evenly. */}
+        <div
+          className={`mt-6 grid grid-cols-2 gap-3 md:mt-10 md:gap-5 ${wide ? "md:grid-cols-6" : "md:grid-cols-3"}`}
+        >
           {PHOTOS.map((p, i) => (
             <button
               key={p.src}
               type="button"
               onClick={() => setIndex(i)}
               aria-label={`Open ${p.label} photo`}
-              className={`group relative block overflow-hidden rounded-[16px] bg-black ${i === 0 ? "col-span-2 md:col-span-1" : ""}`}
+              className={`group relative block overflow-hidden rounded-[16px] bg-black ${
+                i === 0 && PHOTOS.length % 2 === 1 ? "col-span-2" : "col-span-1"
+              } ${wide ? (i < 2 ? "md:col-span-3" : "md:col-span-2") : "md:col-span-1"}`}
             >
               <Image
                 src={p.src}
                 alt={`${p.label} at Aura Dental, Madinaguda`}
                 width={768}
                 height={512}
-                sizes={`(min-width: 768px) 400px, ${i === 0 ? "100vw" : "50vw"}`}
+                sizes={`(min-width: 768px) ${wide && i < 2 ? "620px" : "400px"}, ${
+                  i === 0 && PHOTOS.length % 2 === 1 ? "100vw" : "50vw"
+                }`}
                 className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-3 pb-2 pt-8 text-left text-[14px] font-semibold text-white md:text-[16px]">
-                {p.label}
-              </span>
+              {captions && (
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-3 pb-2 pt-8 text-left text-[14px] font-semibold text-white md:text-[16px]">
+                  {p.label}
+                </span>
+              )}
             </button>
           ))}
         </div>
