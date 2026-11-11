@@ -42,6 +42,9 @@ export const metadata: Metadata = {
       "A Premium dental care clinic that blending expertise, luxury & warmth. Located in Madeenaguda, Aura Dental is your go-to clinic led by Dr. Siva Nagini. Discover your smile Aura at Aura Dental.",
     images: ["/images/home.jpg"],
   },
+  verification: {
+    google: "ixjLCiT9Az9i6AR0urdKBGyfb9SEQjmspgbhulK5jp8",
+  },
 };
 
 export default function RootLayout({
