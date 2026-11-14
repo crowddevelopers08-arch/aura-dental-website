@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Open_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+
+const GA_MEASUREMENT_ID = "G-5F0RY0172V";
 
 /*
  * The source site self-hosts exactly these two families through HubSpot's
@@ -54,7 +57,23 @@ export default function RootLayout({
     <html lang="en" className={`${openSans.variable} ${ebGaramond.variable}`}>
       {/* Chrome lives in `(site)/layout.tsx`; this layout only carries the
           document shell, fonts and site-wide metadata. */}
-      <body className="bg-white antialiased">{children}</body>
+      <body className="bg-white antialiased">
+        {children}
+
+        {/* Google Analytics (GA4) */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
+      </body>
     </html>
   );
 }
